@@ -16,9 +16,9 @@ def create_container(username: str):
     Assign a dynamically available port and use the nginx:stable-alpine3.20-slim image.
     """
     try:
-        # Validate username
-        if not username or not username.isalnum():
-            raise ValueError("Username must be alphanumeric and non-empty.")
+        # # Validate username
+        # if not username or not username.isalnum():
+        #     raise ValueError("Username must be alphanumeric and non-empty.")
 
         # Check if a container with the same name already exists
         try:
