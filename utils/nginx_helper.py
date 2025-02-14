@@ -4,7 +4,7 @@ NGINX_HOST_CONF_PATH = "/code/nginx.conf"  # Host machine path
 
 docker_client = docker.from_env()
 
-def update_nginx_config(username: str):
+def update_nginx_config(username: str, domain: str):
     """
     Update Nginx configuration to route traffic for the new container.
     Ensures the new location block is added inside the server block.
@@ -24,6 +24,8 @@ def update_nginx_config(username: str):
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_redirect off;
+        add_header X-Frame-Options SAMEORIGIN;
+        add_header Content-Security-Policy "frame-ancestors 'self' {domain};";
     }}
 """
 

@@ -4,6 +4,7 @@ from utils.nginx_helper import update_nginx_config, restart_nginx
 import os
 import re
 
+domain = os.getenv("DOMAIN")
 mapping_path = os.getenv("MAPPING_PATH")
 if mapping_path[-1] == "/":
     mapping_path = mapping_path[:-1]
@@ -46,7 +47,7 @@ def create_container(username: str):
         )
 
         # Update Nginx config
-        update_nginx_config(username)
+        update_nginx_config(username, domain)
 
         # Restart Nginx to apply changes
         restart_nginx()
