@@ -4,7 +4,6 @@ from utils.nginx_helper import update_nginx_config, restart_nginx
 import os
 import re
 
-domain = os.getenv("DOMAIN")
 mapping_path = os.getenv("MAPPING_PATH")
 if mapping_path[-1] == "/":
     mapping_path = mapping_path[:-1]
@@ -40,14 +39,15 @@ def create_container(username: str):
             user="root",
             # ports={'8080/tcp': port},  # Map container port 8080 to host port 8080
             volumes={f"{mapping_path}/{username}": {"bind": "/home/coder", "mode": "rw"}},  # Volume mapping
-            environment={"PASSWORD": f"coder-{username}"},  # Set password
+            # environment={"PASSWORD": f"coder-{username}"},  # Set password
             restart_policy={"Name": "always"},  # Restart policy
             tty=True,
-            network="code-spaces"
+            network="code-spaces",
+            command=["code-server", "--bind-addr", "0.0.0.0:8080", "--auth", "none"]
         )
 
         # Update Nginx config
-        update_nginx_config(username, domain)
+        update_nginx_config(username)
 
         # Restart Nginx to apply changes
         restart_nginx()
