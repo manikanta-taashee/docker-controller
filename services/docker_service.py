@@ -33,7 +33,7 @@ def create_container(username: str):
 
         # Create the container
         container = docker_client.containers.run(
-            "taasheeadmin/code-server:1.0",
+            "taasheeadmin/code-server",
             detach=True,
             name=f"{username}-code-server",
             user="root",
