@@ -17,7 +17,7 @@ async def get_container_endpoint(container_name: str):
     try:
         result = get_container(container_name)
         if not result:
-            return JSONResponse({"detail": "Container not found."}, status_code=404)
+            return JSONResponse({"detail": "Container not found."}, status_code=410)
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to retrieve container: {str(e)}")
@@ -27,7 +27,7 @@ async def remove_container_endpoint(container_name: str):
     try:
         result = remove_container(container_name)
         if not result:
-            return JSONResponse({"detail": "Container not found."}, status_code=404)
+            return JSONResponse({"detail": "Container not found."}, status_code=410)
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to remove container: {str(e)}")
