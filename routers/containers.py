@@ -1,4 +1,5 @@
 from fastapi import APIRouter, HTTPException
+from fastapi.responses import JSONResponse
 from services.docker_service import create_container, get_container, remove_container, list_containers
 
 router = APIRouter()
@@ -16,7 +17,7 @@ async def get_container_endpoint(container_name: str):
     try:
         result = get_container(container_name)
         if not result:
-            raise HTTPException(status_code=404, detail="Container not found.")
+            return JSONResponse(status_code=404, detail="Container not found.")
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to retrieve container: {str(e)}")
@@ -26,7 +27,7 @@ async def remove_container_endpoint(container_name: str):
     try:
         result = remove_container(container_name)
         if not result:
-            raise HTTPException(status_code=404, detail="Container not found.")
+            return JSONResponse(status_code=404, detail="Container not found.")
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to remove container: {str(e)}")
